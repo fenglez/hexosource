@@ -5,7 +5,7 @@ environment:
     secure: qnBLe9Rsz13oig7Gy2OdAgi/qUmdWHlyvNv4RPc9L0brayOrA8b7GdjNqfFeLeDc
 
 install:
-  - git clone --branch=master https://github.com/fenglez/hexo-theme-next.git C:\projects\hexosource\themes\next
+  - git clone --branch=master https://github.com/fenglez/hexo-theme-next.git C:\projects\hexosource\themes\next\hexo-theme-next
   - mv C:/projects/hexosource/themes/next/hexo-theme-next/* C:/projects/hexosource/themes/next
   - node --version
   - npm --version
