@@ -1,4 +1,7 @@
 clone_depth: 5
+clone:
+  git clone -q --depth=5 --branch=master https://github.com/fenglez/hexo-theme-next.git C:\projects\hexosource\thems\next
+
 
 environment:
   access_token:
