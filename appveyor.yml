@@ -6,6 +6,7 @@ environment:
 
 install:
   - git clone -q --depth=5 --branch=master https://github.com/fenglez/hexo-theme-next.git C:\projects\hexosource\thems\next
+  - mv -r C:\projects\hexosource\thems\next\hexo-theme-next\* C:\projects\hexosource\thems\next
   - node --version
   - npm --version
   - npm install
