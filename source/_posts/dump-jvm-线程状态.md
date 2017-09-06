@@ -3,9 +3,6 @@ title: dump jvm 线程状态
 date: 2017-09-05 19:43:55
 tags:
 ---
-
-jvm状态
-
 #### dump下来jvm状态
 ``` bash
 /Library/Java/JavaVirtualMachines/jdk1.8.0_131.jdk/Contents/Home/bin/jstack 6366 > ./dump17
@@ -45,3 +42,9 @@ grep java.lang.Thread.State dump17 | awk "{print $2$3$4$5}" | sort |uniq -c
     候，会重新从系统内存中把数据读到处理器缓存。
  ``` 
  ####synchronized
+  ``` bash
+  1：对于普通方法，锁是当前实例对象
+  2：对于静态方法，锁是当前类的Class对象
+  3：对于同步方法块，锁是synchronized括号里配置的对象
+  对于一个线程访问同步代码，必须先得到锁，退出或抛出异常时抛出锁。
+  ``` 
