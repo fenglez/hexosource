@@ -9,6 +9,6 @@ redis设计与实现
 地址： http://redisbook.com/
 ###2017-08
 Java多线程编程核心技术
-
 kafka设计原理
-
+###2017-09
+Java并发编程的艺术
