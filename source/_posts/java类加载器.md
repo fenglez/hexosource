@@ -145,7 +145,8 @@ public class ClassLoaderTest {
 }
 
 输出为：classloadr.NetworkClassLoader@19eeac
-``` 
+```
+#### 4.容器的类加载器
 目前常用web服务器中都定义了自己的类加载器，用于加载web应用指定目录下的类库（jar或class），如：Weblogic、Jboss、tomcat等，
 下面我以Tomcat为例，展示该web容器都定义了哪些个类加载器：
 ``` bash
@@ -176,3 +177,47 @@ sun.misc.Launcher$ExtClassLoader;
 null;
 }
 ``` 
+#### 5.什么时候需要类加载器
+首先介绍自定义类的应用场景：
+（1）加密：Java代码可以轻易的被反编译，如果你需要把自己的代码进行加密以防止反编译，可以先将编译后的代码用某种加密算法加密，类加密后就不能再用Java的ClassLoader去加载类了，这时就需要自定义ClassLoader在加载类的时候先解密类，然后再加载。
+（2）从非标准的来源加载代码：如果你的字节码是放在数据库、甚至是在云端，就可以自定义类加载器，从指定的来源加载类。
+（3）以上两种情况在实际中的综合运用：比如你的应用需要通过网络来传输 Java 类的字节码，为了安全性，这些字节码经过了加密处理。这个时候你就需要自定义类加载器来从某个网络地址上读取加密后的字节代码，接着进行解密和验证，最后定义出在Java虚拟机中运行的类。
+``` bash
+//双亲委派模型的工作过程源码
+protected synchronized Class<?> loadClass(String name, boolean resolve)
+throws ClassNotFoundException
+{
+// First, check if the class has already been loaded
+Class c = findLoadedClass(name);
+if (c == null) {
+try {
+if (parent != null) {
+c = parent.loadClass(name, false);
+} else {
+c = findBootstrapClassOrNull(name);
+}
+} catch (ClassNotFoundException e) {
+// ClassNotFoundException thrown if class not found
+// from the non-null parent class loader
+//父类加载器无法完成类加载请求
+}
+if (c == null) {
+// If still not found, then invoke findClass in order to find the class
+//子加载器进行类加载 
+c = findClass(name);
+}
+}
+if (resolve) {//判断是否需要链接过程，参数传入
+resolveClass(c);
+}
+return c;
+}
+```
+双亲委派模型的工作过程如下：
+（1）当前类加载器从自己已经加载的类中查询是否此类已经加载，如果已经加载则直接返回原来已经加载的类。
+（2）如果没有找到，就去委托父类加载器去加载（如代码c = parent.loadClass(name, false)所示）。父类加载器也会采用同样的策略，查看自己已经加载过的类中是否包含这个类，有就返回，没有就委托父类的父类去加载，一直到启动类加载器。因为如果父加载器为空了，就代表使用启动类加载器作为父加载器去加载。
+（3）如果启动类加载器加载失败（例如在$JAVA_HOME/jre/lib里未查找到该class），会使用拓展类加载器来尝试加载，继续失败则会使用AppClassLoader来加载，继续失败则会抛出一个异常ClassNotFoundException，然后再调用当前加载器的findClass()方法进行加载。
+ 
+双亲委派模型的好处：
+（1）主要是为了安全性，避免用户自己编写的类动态替换 Java的一些核心类，比如 String。
+（2）同时也避免了类的重复加载，因为 JVM中区分不同类，不仅仅是根据类名，相同的 class文件被不同的 ClassLoader加载就是不同的两个类。
