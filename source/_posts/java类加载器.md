@@ -27,13 +27,15 @@ JAVA_HOME/jre/lib/ext/目下的所有jar。
         loader = loader.getParent();//获得父类加载器的引用
     }
     System.out.println(loader);
-``` 
+```
+
 注意： 除了Java默认提供的三个ClassLoader之外，用户还可以根据需要定义自已的ClassLoader，
 而这些自定义的ClassLoader都必须继承自java.lang.ClassLoader类，也包括Java提供的另外二个
 ClassLoader（Extension ClassLoader和App ClassLoader）在内，但是Bootstrap 
 ClassLoader不继承自ClassLoader，因为它不是一个普通的Java类，底层由C++编写，
 已嵌入到了JVM内核当中，当JVM启动后，Bootstrap ClassLoader也随着启动，
 负责加载完核心类库后，并构造Extension ClassLoader和App ClassLoader类加载器。
+
 #### 2.ClassLoader加载类的原理
 
 1、原理介绍
@@ -69,7 +71,7 @@ class。比如网络上的一个Java类org.classloader.simple.NetClassLoaderSimp
 将这个Class实例生成具体的对象进行转换时，就会抛运行时异常java.lang.ClassCaseException，
 提示这是两个不同的类型。现在通过实例来验证上述所描述的是否正确：
 
-### 3.定义自己的类加载器
+####3.定义自己的类加载器
 四、定义自已的ClassLoader
 
 既然JVM已经提供了默认的类加载器，为什么还要定义自已的类加载器呢？
@@ -91,6 +93,7 @@ class。比如网络上的一个Java类org.classloader.simple.NetClassLoaderSimp
 索不到类时，loadClass方法就会调用findClass方法来搜索类，所以我们只需重写该方法即可。如没
 有特殊的要求，一般不建议重写loadClass搜索类的算法。下图是API中ClassLoader的loadClass
 方法：
+
 ``` bash
     public class NetworkClassLoader extends ClassLoader {  
         private String rootUrl;  
@@ -170,10 +173,10 @@ public class ClassLoaderTest {
     }  
        
 }
-
 输出为：classloadr.NetworkClassLoader@19eeac
 ```
-#### 4.容器的类加载器
+
+ ####4.容器的类加载器
 目前常用web服务器中都定义了自己的类加载器，用于加载web应用指定目录下的类库（jar或class），
 如：Weblogic、Jboss、tomcat等，
 下面我以Tomcat为例，展示该web容器都定义了哪些个类加载器：
@@ -218,6 +221,7 @@ null;
 （3）以上两种情况在实际中的综合运用：比如你的应用需要通过网络来传输 Java 类的字节码，
 为了安全性，这些字节码经过了加密处理。这个时候你就需要自定义类加载器来从某个网络地址上读取加
 密后的字节代码，接着进行解密和验证，最后定义出在Java虚拟机中运行的类。
+
 ``` bash
 //双亲委派模型的工作过程源码
 protected synchronized Class<?> loadClass(String name, boolean resolve)
@@ -249,6 +253,7 @@ resolveClass(c);
 return c;
 }
 ```
+
 双亲委派模型的工作过程如下：
 （1）当前类加载器从自己已经加载的类中查询是否此类已经加载，如果已经加载则直接返回原来已经加载
 的类。
