@@ -71,8 +71,7 @@ class。比如网络上的一个Java类org.classloader.simple.NetClassLoaderSimp
 将这个Class实例生成具体的对象进行转换时，就会抛运行时异常java.lang.ClassCaseException，
 提示这是两个不同的类型。现在通过实例来验证上述所描述的是否正确：
 
-####3.定义自己的类加载器
-四、定义自已的ClassLoader
+#### 3.定义自己的类加载器
 
 既然JVM已经提供了默认的类加载器，为什么还要定义自已的类加载器呢？
 
@@ -176,7 +175,8 @@ public class ClassLoaderTest {
 输出为：classloadr.NetworkClassLoader@19eeac
 ```
 
- ####4.容器的类加载器
+#### 4.容器的类加载器
+
 目前常用web服务器中都定义了自己的类加载器，用于加载web应用指定目录下的类库（jar或class），
 如：Weblogic、Jboss、tomcat等，
 下面我以Tomcat为例，展示该web容器都定义了哪些个类加载器：
@@ -208,10 +208,10 @@ com.sankuai.mms.boot.Classpath$MmsBootClassLoader;
 sun.misc.Launcher$ExtClassLoader;
 null;
 }
-
 ``` 
 
 #### 5.什么时候需要类加载器
+
 首先介绍自定义类的应用场景：
 （1）加密：Java代码可以轻易的被反编译，如果你需要把自己的代码进行加密以防止反编译，可以先
 将编译后的代码用某种加密算法加密，类加密后就不能再用Java的ClassLoader去加载类了，这时就
