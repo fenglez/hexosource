@@ -2,6 +2,7 @@
 title: dump jvm 线程状态
 date: 2017-09-05 19:43:55
 tags:
+categories: "java基础"
 ---
 #### dump下来jvm状态
 ``` bash
