@@ -180,7 +180,6 @@ public class ClassLoaderTest {
 目前常用web服务器中都定义了自己的类加载器，用于加载web应用指定目录下的类库（jar或class），
 如：Weblogic、Jboss、tomcat等，
 下面我以Tomcat为例，展示该web容器都定义了哪些个类加载器：
-
 ``` bash
     public JSONResponse getA() throws CapiInnerException {
         ClassLoader loader = this.getClass().getClassLoader();
@@ -209,7 +208,6 @@ sun.misc.Launcher$ExtClassLoader;
 null;
 }
 ``` 
-
 #### 5.什么时候需要类加载器
 
 首先介绍自定义类的应用场景：
