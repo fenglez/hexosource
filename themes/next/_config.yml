@@ -175,7 +175,7 @@ excerpt_description: true
 # Please use <!-- more --> in the post to control excerpt accurately.
 auto_excerpt:
   enable: true
-  length: 150
+  length: 50
 
 # Post meta display settings
 post_meta:
@@ -208,7 +208,7 @@ post_wordcount:
 # Declare license on posts
 post_copyright:
   enable: false
-  license: jzh
+  license: jzh 253222680@qq.com
   license_url: http://oauth.club
 
 
