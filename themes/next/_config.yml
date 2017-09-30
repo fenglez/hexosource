@@ -318,7 +318,7 @@ disqus:
 
 # changyan
 changyan:
-  enable: false
+  enable: true
   appid:
   appkey:
 
